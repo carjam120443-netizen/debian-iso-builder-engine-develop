@@ -29,12 +29,10 @@ jobs:
 
           # Debian's current archive stores Contents indexes under the
           # component directory (for example /main/Contents-amd64.gz),
-          # while the runner's live-build helper still requests the old
-          # top-level path. Patch only that host-side helper for this build.
-          sudo sed -i \
-            's|/dists/\${LB_PARENT_DISTRIBUTION}/Contents-|/dists/\${LB_PARENT_DISTRIBUTION}/main/Contents-|g; \
-             s|/dists/\${LB_DISTRIBUTION}/Contents-|/dists/\${LB_DISTRIBUTION}/main/Contents-|g' \
-            /usr/lib/live/build/lb_chroot_linux-image
+          # while this Ubuntu runner's live-build helper requests the old
+          # top-level path. Patch the helper without shell-quoting tricks.
+          sudo sed -i 's|/dists/\${LB_PARENT_DISTRIBUTION}/Contents-|/dists/\${LB_PARENT_DISTRIBUTION}/main/Contents-|g' /usr/lib/live/build/lb_chroot_linux-image
+          sudo sed -i 's|/dists/\${LB_DISTRIBUTION}/Contents-|/dists/\${LB_DISTRIBUTION}/main/Contents-|g' /usr/lib/live/build/lb_chroot_linux-image
 
           grep -n 'Contents-' /usr/lib/live/build/lb_chroot_linux-image
 
