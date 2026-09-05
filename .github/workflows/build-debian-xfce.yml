@@ -22,7 +22,8 @@ jobs:
           set -euxo pipefail
           sudo apt-get update
           sudo apt-get install -y \
-            live-build debootstrap squashfs-tools xorriso \
+            live-build debootstrap debian-archive-keyring \
+            squashfs-tools xorriso \
             grub-pc-bin grub-efi-amd64-bin grub-efi-amd64-signed \
             shim-signed mtools dosfstools syslinux-common isolinux
 
