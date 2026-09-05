@@ -15,6 +15,7 @@ lb config noauto \
   --mirror-chroot http://deb.debian.org/debian \
   --mirror-binary http://deb.debian.org/debian \
   --security false \
+  --initsystem systemd \
   --linux-packages linux-image \
   --linux-flavours amd64 \
   --debian-installer live \
