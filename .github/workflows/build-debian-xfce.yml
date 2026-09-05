@@ -1,60 +1,58 @@
-name: Build Debian XFCE Remix ISO
+name: Build Vanilla Linux XFCE ISO
 
 on:
-  workflow_dispatch:
   push:
-    paths:
-      - 'auto/**'
-      - 'config/**'
-      - '.github/workflows/build-debian-xfce.yml'
+  workflow_dispatch:
 
 permissions:
   contents: read
 
-env:
-  DEBIAN_FRONTEND: noninteractive
-
 jobs:
   build:
+    name: Build Vanilla Linux XFCE live ISO
     runs-on: ubuntu-24.04
+    env:
+      DEBIAN_FRONTEND: noninteractive
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Install live-build dependencies
         run: |
+          set -euxo pipefail
           sudo apt-get update
           sudo apt-get install -y \
-            live-build \
-            debootstrap \
-            squashfs-tools \
-            xorriso \
-            grub-pc-bin \
-            grub-efi-amd64-bin \
-            grub-efi-amd64-signed \
-            shim-signed \
-            mtools \
-            dosfstools \
-            syslinux-common \
-            isolinux
+            live-build debootstrap squashfs-tools xorriso \
+            grub-pc-bin grub-efi-amd64-bin grub-efi-amd64-signed \
+            shim-signed mtools dosfstools syslinux-common isolinux
 
-      - name: Configure live-build
-        run: sh auto/config
+      - name: Configure Vanilla Linux XFCE
+        run: |
+          set -euxo pipefail
+          chmod +x auto/config
+          ./auto/config
 
       - name: Build ISO
-        run: sudo lb build 2>&1 | tee build.log
-
-      - name: Rename ISO
         run: |
+          set -euxo pipefail
+          sudo lb build 2>&1 | tee build.log
+
+      - name: Verify and rename ISO
+        run: |
+          set -euxo pipefail
           ISO="$(find . -maxdepth 1 -type f -name '*.iso' -print -quit)"
           test -n "$ISO"
-          cp "$ISO" debian-xfce-remix-amd64.iso
+          test -s "$ISO"
+          cp "$ISO" vanilla-linux-xfce-amd64.iso
+          file vanilla-linux-xfce-amd64.iso
+          ls -lh vanilla-linux-xfce-amd64.iso
 
       - name: Upload ISO artifact
         uses: actions/upload-artifact@v4
         with:
-          name: debian-xfce-remix-amd64
+          name: vanilla-linux-xfce-amd64
           path: |
-            debian-xfce-remix-amd64.iso
+            vanilla-linux-xfce-amd64.iso
             build.log
           if-no-files-found: error
+          retention-days: 30
