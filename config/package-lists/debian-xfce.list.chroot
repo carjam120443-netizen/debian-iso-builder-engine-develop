@@ -16,3 +16,4 @@ calamares
 calamares-settings-debian
 os-prober
 linux-image-amd64
+xfce4-cpufreq-plugin
