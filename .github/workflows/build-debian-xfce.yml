@@ -31,7 +31,19 @@ jobs:
         run: |
           set -euxo pipefail
           chmod +x auto/config config/hooks/live/9999-vanilla-branding.chroot
+
+          # Remove only generated live-build state from a previous configuration.
+          # Tracked package lists, includes, hooks, and branding remain untouched.
+          sudo rm -rf config/common config/bootstrap config/chroot config/binary config/source
+          sudo rm -f config/archives/*.list config/archives/*.list.chroot config/archives/*.list.binary config/archives/*.list.chroot_binary
+
           ./auto/config
+
+          # Never allow Ubuntu host defaults to leak into the Debian build.
+          if grep -R -nE 'linux-generic|security\.ubuntu\.com|archive\.ubuntu\.com/ubuntu' config 2>/dev/null; then
+            echo "ERROR: Ubuntu/stale live-build configuration detected"
+            exit 1
+          fi
 
       - name: Build ISO
         run: |
