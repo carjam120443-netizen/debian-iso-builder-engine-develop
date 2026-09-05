@@ -1,0 +1,17 @@
+xfce4
+xfce4-goodies
+lightdm
+lightdm-gtk-greeter
+network-manager
+network-manager-gnome
+thunar
+thunar-archive-plugin
+thunar-volman
+mousepad
+firefox-esr
+sudo
+policykit-1
+pkexec
+calamares
+calamares-settings-debian
+os-prober
