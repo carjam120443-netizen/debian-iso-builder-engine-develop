@@ -10,8 +10,9 @@ thunar-volman
 mousepad
 firefox-esr
 sudo
-policykit-1
+polkitd
 pkexec
 calamares
 calamares-settings-debian
 os-prober
+linux-image-amd64
