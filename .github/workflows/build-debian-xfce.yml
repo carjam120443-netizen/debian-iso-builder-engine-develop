@@ -1,0 +1,60 @@
+name: Build Debian XFCE Remix ISO
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'auto/**'
+      - 'config/**'
+      - '.github/workflows/build-debian-xfce.yml'
+
+permissions:
+  contents: read
+
+env:
+  DEBIAN_FRONTEND: noninteractive
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install live-build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            live-build \
+            debootstrap \
+            squashfs-tools \
+            xorriso \
+            grub-pc-bin \
+            grub-efi-amd64-bin \
+            grub-efi-amd64-signed \
+            shim-signed \
+            mtools \
+            dosfstools \
+            syslinux-common \
+            isolinux
+
+      - name: Configure live-build
+        run: sh auto/config
+
+      - name: Build ISO
+        run: sudo lb build 2>&1 | tee build.log
+
+      - name: Rename ISO
+        run: |
+          ISO="$(find . -maxdepth 1 -type f -name '*.iso' -print -quit)"
+          test -n "$ISO"
+          cp "$ISO" debian-xfce-remix-amd64.iso
+
+      - name: Upload ISO artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: debian-xfce-remix-amd64
+          path: |
+            debian-xfce-remix-amd64.iso
+            build.log
+          if-no-files-found: error
