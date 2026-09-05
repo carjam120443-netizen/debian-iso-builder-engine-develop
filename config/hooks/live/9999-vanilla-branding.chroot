@@ -1,0 +1,37 @@
+#!/bin/sh
+set -e
+
+# Vanilla Linux branding, following the vanilla-linux project identity.
+if [ -f /etc/calamares/settings.conf ]; then
+    sed -i 's/^branding: .*/branding: vanilla/' /etc/calamares/settings.conf
+fi
+
+mkdir -p /etc/calamares/branding/vanilla
+cat > /etc/calamares/branding/vanilla/branding.desc <<'EOF'
+---
+componentName: vanilla
+welcomeStyleCalamares: false
+welcomeExpandingLogo: true
+windowExpanding: normal
+windowSize: 800px,580px
+windowPlacement: center
+
+strings:
+ productName: Vanilla Linux
+ shortProductName: Vanilla
+ version: 1.0
+ shortVersion: 1.0
+ versionedName: Vanilla Linux 1.0
+ shortVersionedName: Vanilla Linux 1.0
+ bootloaderEntryName: Vanilla Linux
+ productUrl: https://github.com/carjam120443-netizen/vanilla-linux
+ supportUrl: https://github.com/carjam120443-netizen/vanilla-linux/issues
+ knownIssuesUrl: https://github.com/carjam120443-netizen/vanilla-linux/issues
+ releaseNotesUrl: https://github.com/carjam120443-netizen/vanilla-linux
+ donateUrl:
+
+sidebar: widget
+navigation: widget
+EOF
+
+chmod 644 /etc/calamares/branding/vanilla/branding.desc
