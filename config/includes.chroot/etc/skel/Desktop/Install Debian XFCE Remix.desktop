@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Install Debian XFCE Remix
+Comment=Install Debian XFCE Remix to this computer
+Exec=calamares
+Icon=calamares
+Terminal=false
+Categories=System;Settings;
+StartupNotify=true
