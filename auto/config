@@ -1,9 +1,10 @@
 #!/bin/sh
 set -e
 
-# live-build must not inherit an Ubuntu mirror from the runner/environment.
-# Keep the build strictly Debian-based, matching Vanilla Linux.
-rm -f config/bootstrap config/archives/*.list.chroot 2>/dev/null || true
+# Keep the build strictly Debian-based. live-build can inherit stale
+# security mirrors from generated configuration, so remove those before
+# regenerating the configuration.
+rm -f config/bootstrap config/archives/*.list.chroot config/archives/*.list.chroot_binary 2>/dev/null || true
 
 lb config noauto \
   --distribution trixie \
@@ -12,6 +13,8 @@ lb config noauto \
   --mirror-bootstrap http://deb.debian.org/debian \
   --mirror-chroot http://deb.debian.org/debian \
   --mirror-binary http://deb.debian.org/debian \
+  --mirror-chroot-security http://deb.debian.org/debian-security \
+  --mirror-binary-security http://deb.debian.org/debian-security \
   --debian-installer live \
   --debian-installer-gui true \
   --bootappend-live "boot=live components quiet splash" \
