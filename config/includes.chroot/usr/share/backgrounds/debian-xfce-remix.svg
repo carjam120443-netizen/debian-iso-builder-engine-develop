@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="3840" height="2160" viewBox="0 0 3840 2160">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#111827"/>
+      <stop offset="0.55" stop-color="#1e3a8a"/>
+      <stop offset="1" stop-color="#0f766e"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="45%" r="55%">
+      <stop offset="0" stop-color="#60a5fa" stop-opacity="0.30"/>
+      <stop offset="1" stop-color="#60a5fa" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="3840" height="2160" fill="url(#bg)"/>
+  <rect width="3840" height="2160" fill="url(#glow)"/>
+  <circle cx="650" cy="430" r="420" fill="#ffffff" opacity="0.035"/>
+  <circle cx="3250" cy="1760" r="620" fill="#ffffff" opacity="0.035"/>
+  <path d="M0 1690 C850 1410 1250 1960 2030 1650 S3220 1390 3840 1600 L3840 2160 L0 2160 Z" fill="#020617" opacity="0.34"/>
+  <g text-anchor="middle" font-family="DejaVu Sans, sans-serif" fill="#ffffff">
+    <text x="1920" y="1020" font-size="150" font-weight="700" letter-spacing="8">DEBIAN XFCE</text>
+    <text x="1920" y="1180" font-size="76" font-weight="300" letter-spacing="16" opacity="0.92">REMIX</text>
+    <text x="1920" y="1325" font-size="38" letter-spacing="5" opacity="0.72">LIGHTWEIGHT • CLEAN • YOURS</text>
+  </g>
+</svg>
